@@ -144,3 +144,4 @@ kind
 kustomize
 .terraform*
 *.tfstate
+*.tfstate.backup
