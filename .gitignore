@@ -142,3 +142,5 @@ __pycache__/
 kustomization.yaml
 kind
 kustomize
+.terraform*
+*.tfstate
