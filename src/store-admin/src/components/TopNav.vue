@@ -7,7 +7,7 @@
       <span class="hamburger-icon"></span>
     </button>
     <ul class="nav-links" :class="{ 'nav-links--open': isNavOpen }">
-      <li><router-link to="/orders" @click="closeNav">Orders</router-link></li>
+      <li><router-link to="/orders" @click="closeNav">Orders etc</router-link></li>
       <li><router-link to="/products" @click="closeNav">Products</router-link></li>
     </ul>
   </nav>
