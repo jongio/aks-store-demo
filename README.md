@@ -170,3 +170,7 @@ Once the deployment is complete, you can verify all the services are running and
 1. Run `azd env set AI_ONLY false`
 1. Run `azd up`. This will provision all Azure resources (AKS, Service Bus, etc)
 1. Open store-admin IP, which will be outputted to the terminal. Enter keywords. Hit "Ask OpenAI" Button.
+
+### Setup GitHub Action
+
+1. Run `azd auth login --use-device-code=false` to login.
