@@ -2,7 +2,7 @@ version: "3.7"
 services:
   mongodb:
     image: mongo:6.0.6
-    container_name: 'mongo'
+    container_name: "mongo"
     restart: always
     ports:
       - 27017:27017
@@ -15,7 +15,7 @@ services:
       - backend_services
   rabbitmq:
     image: rabbitmq:3.11.17-management-alpine
-    container_name: 'rabbitmq'
+    container_name: "rabbitmq"
     restart: always
     environment:
       - "RABBITMQ_DEFAULT_USER=username"
@@ -34,12 +34,20 @@ services:
       - backend_services
   orderservice:
     build: src/order-service
-    container_name: 'orderservice'
+    container_name: "orderservice"
     restart: always
     ports:
       - 3000:3000
     healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://orderservice:3000/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "-O",
+          "/dev/null",
+          "-q",
+          "http://orderservice:3000/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -57,12 +65,20 @@ services:
         condition: service_healthy
   makelineservice:
     build: src/makeline-service
-    container_name: 'makelineservice'
+    container_name: "makelineservice"
     restart: always
     ports:
       - 3001:3001
     healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://makelineservice:3001/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "-O",
+          "/dev/null",
+          "-q",
+          "http://makelineservice:3001/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -83,12 +99,20 @@ services:
         condition: service_healthy
   productservice:
     build: src/product-service
-    container_name: 'productservice'
+    container_name: "productservice"
     restart: always
     ports:
       - 3002:3002
     healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://productservice:3002/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "-O",
+          "/dev/null",
+          "-q",
+          "http://productservice:3002/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -96,12 +120,13 @@ services:
       - backend_services
   storefront:
     build: src/store-front
-    container_name: 'storefront'
+    container_name: "storefront"
     restart: always
     ports:
       - 8080:8080
     healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://storefront:80/health"]
+      test:
+        ["CMD", "wget", "-O", "/dev/null", "-q", "http://storefront:80/health"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -115,12 +140,13 @@ services:
       - orderservice
   storeadmin:
     build: src/store-admin
-    container_name: 'storeadmin'
+    container_name: "storeadmin"
     restart: always
     ports:
       - 8081:8081
     healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://storeadmin:80/health"]
+      test:
+        ["CMD", "wget", "-O", "/dev/null", "-q", "http://storeadmin:80/health"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -135,7 +161,7 @@ services:
       - makelineservice
   virtualcustomer:
     build: src/virtual-customer
-    container_name: 'virtualcustomer'
+    container_name: "virtualcustomer"
     restart: always
     environment:
       - ORDER_SERVICE_URL=http://orderservice:3000/
@@ -147,7 +173,7 @@ services:
         condition: service_healthy
   virtualworker:
     build: src/virtual-worker
-    container_name: 'virtualworker'
+    container_name: "virtualworker"
     restart: always
     environment:
       - MAKELINE_SERVICE_URL=http://makelineservice:3001
@@ -159,20 +185,21 @@ services:
         condition: service_healthy
   aiservice:
     build: src/ai-service
-    container_name: 'aiservice'
+    container_name: "aiservice"
     restart: always
     ports:
       - 5001:5001
     healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://aiservice:5001/health"]
+      test:
+        ["CMD", "wget", "-O", "/dev/null", "-q", "http://aiservice:5001/health"]
       interval: 30s
       timeout: 10s
       retries: 5
     environment:
       - USE_AZURE_OPENAI=True # set to False if you are not using Azure OpenAI
-      - AZURE_OPENAI_DEPLOYMENT_NAME= # required if using Azure OpenAI
-      - AZURE_OPENAI_ENDPOINT= # required if using Azure OpenAI
-      - OPENAI_API_KEY= # required if using OpenAI and not required if using Azure OpenAI with Azure AD 
+      - AZURE_OPENAI_DEPLOYMENT_NAME=gpt-35-turbo # required if using Azure OpenAI
+      - AZURE_OPENAI_ENDPOINT=${ai_endpoint} # required if using Azure OpenAI
+      - OPENAI_API_KEY=${ai_key} # required if using OpenAI and not required if using Azure OpenAI with Azure AD
       - OPENAI_ORG_ID= # required if using OpenAI
     networks:
       - backend_services

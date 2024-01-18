@@ -138,3 +138,7 @@ __pycache__/
 .vscode
 **/.vscode
 .azure
+
+kustomization.yaml
+kind
+kustomize

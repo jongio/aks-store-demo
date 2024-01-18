@@ -7,11 +7,18 @@ variable "ai_location" {
   type        = string
 }
 
+variable "ai_only" {
+  description = "value of azure ai only"
+  type        = bool
+  default     = true
+}
+
 variable "openai_model_name" {
   description = "value of azure openai model name"
   type        = string
   default     = "gpt-35-turbo"
 }
+
 variable "openai_model_version" {
   description = "value of azure openai model version"
   type        = string

@@ -30,11 +30,12 @@ resource "azurerm_user_assigned_identity" "example" {
 }
 
 resource "azurerm_federated_identity_credential" "example" {
+  count               = var.ai_only ? 0 : 1
   name                = "aoai-${local.name}"
   resource_group_name = azurerm_resource_group.example.name
   parent_id           = azurerm_user_assigned_identity.example.id
   audience            = ["api://AzureADTokenExchange"]
-  issuer              = azurerm_kubernetes_cluster.example.oidc_issuer_url
+  issuer              = azurerm_kubernetes_cluster.example[0].oidc_issuer_url
   subject             = "system:serviceaccount:${var.k8s_namespace}:ai-service-account"
 }
 

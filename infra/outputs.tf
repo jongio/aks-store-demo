@@ -3,7 +3,7 @@ output "rg_name" {
 }
 
 output "aks_name" {
-  value = azurerm_kubernetes_cluster.example.name
+  value = var.ai_only ? "" : azurerm_kubernetes_cluster.example[0].name
 }
 
 output "ai_model_name" {
@@ -24,45 +24,45 @@ output "ai_managed_identity_client_id" {
 }
 
 output "sb_namespace_host" {
-  value = "${azurerm_servicebus_namespace.example.name}.servicebus.windows.net"
+  value = var.ai_only ? "" : "${azurerm_servicebus_namespace.example[0].name}.servicebus.windows.net"
 }
 
 output "sb_namespace_uri" {
-  value     = "amqps://${azurerm_servicebus_namespace.example.name}.servicebus.windows.net"
+  value     = var.ai_only ? "" : "amqps://${azurerm_servicebus_namespace.example[0].name}.servicebus.windows.net"
   sensitive = true
 }
 
 output "sb_listener_username" {
-  value = azurerm_servicebus_namespace_authorization_rule.example.name
+  value = var.ai_only ? "" : azurerm_servicebus_namespace_authorization_rule.example[0].name
 }
 
 output "sb_listener_key" {
-  value     = azurerm_servicebus_namespace_authorization_rule.example.primary_key
+  value     = var.ai_only ? "" : azurerm_servicebus_namespace_authorization_rule.example[0].primary_key
   sensitive = true
 }
 
 output "sb_sender_username" {
-  value = azurerm_servicebus_queue_authorization_rule.example.name
+  value = var.ai_only ? "" : azurerm_servicebus_queue_authorization_rule.example[0].name
 }
 
 output "sb_sender_key" {
-  value     = azurerm_servicebus_queue_authorization_rule.example.primary_key
+  value     = var.ai_only ? "" : azurerm_servicebus_queue_authorization_rule.example[0].primary_key
   sensitive = true
 }
 
 output "db_account_name" {
-  value = azurerm_cosmosdb_account.example.name
+  value = var.ai_only ? "" : azurerm_cosmosdb_account.example[0].name
 }
 
 output "db_uri" {
-  value = "mongodb://${azurerm_cosmosdb_account.example.name}.mongo.cosmos.azure.com:10255/?retryWrites=false"
+  value = var.ai_only ? "" : "mongodb://${azurerm_cosmosdb_account.example[0].name}.mongo.cosmos.azure.com:10255/?retryWrites=false"
 }
 
 output "db_key" {
-  value     = azurerm_cosmosdb_account.example.primary_key
+  value     = var.ai_only ? "" : azurerm_cosmosdb_account.example[0].primary_key
   sensitive = true
 }
 
 output "k8s_namespace" {
-  value = var.k8s_namespace
+  value = var.ai_only ? "" : var.k8s_namespace
 }

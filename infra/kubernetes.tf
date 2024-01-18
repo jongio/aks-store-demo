@@ -1,4 +1,5 @@
 resource "azurerm_kubernetes_cluster" "example" {
+  count               = var.ai_only ? 0 : 1
   name                = "aks-${local.name}"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name

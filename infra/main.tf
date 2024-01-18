@@ -45,6 +45,7 @@ resource "random_pet" "example" {
 locals {
   name     = "${random_pet.example.id}${random_integer.example.result}"
   location = var.location
+  ai_only  = var.ai_only
 }
 
 data "azurerm_subscription" "current" {}
