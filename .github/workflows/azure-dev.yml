@@ -37,12 +37,18 @@ jobs:
         with:
           node-version: 18
 
-      - uses: azure/login@v1
+      - name: Login az
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Log in with Azure (Client Credentials)
-        if: ${{ env.AZURE_CREDENTIALS != '' }}
+      - name: Set az account
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az account set --subscription ${{vars.AZURE_SUBSCRIPTION_ID}}
+
+      - name: Log in with Azure
         run: |
           $info = $Env:AZURE_CREDENTIALS | ConvertFrom-Json -AsHashtable;
           Write-Host "::add-mask::$($info.clientSecret)"
@@ -61,6 +67,12 @@ jobs:
           AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
           AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          RS_RESOURCE_GROUP: ${{ vars.RS_RESOURCE_GROUP }}
+          RS_STORAGE_ACCOUNT: ${{ vars.RS_STORAGE_ACCOUNT }}
+          RS_CONTAINER_NAME: ${{ vars.RS_CONTAINER_NAME }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
