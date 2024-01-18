@@ -146,11 +146,22 @@ Once the deployment is complete, you can verify all the services are running and
 
 ### Run in Codespaces with AI Service only.
 
-1. Fork the repo to your own account.
-1. Open in Codespaces
+1. Fork the repo to your own account, include ALL branches.
+1. Open in Codespaces. Make sure you are on `jong2` branch.
 1. Run `azd auth login`
-1. Run `az login` and `az account set -n {sub}` to set right subscription.
-1. Run `azd up` to provision only the Azure AI service
+1. AZ Login
+    1. AZ login from within Codespaces on Web (due to this issue: https://github.com/Azure/azure-cli/issues/20315)
+        - Run `az login --scope https://graph.microsoft.com/.default`
+        - Login. It will fail. Copy the "localhost" URL from the failed redirect.
+        - In Codespaces, open a new terminal. 
+        - Run `curl {the url you copied earlier}`
+        - Close that terminal.
+        - Go back to other terminal where you ran `az login`
+        - It should show you your subscriptions.
+    1. AZ login from within Codespaces in VS Code
+        - Run `az login --scope https://graph.microsoft.com/.default --use-device-code`
+1. Run `az account set -n {sub}` to set right subscription.
+1. Run `azd up` to provision only the Azure AI service. Choose "east us 2" region. 
 1. Run `docker compose up` to run in Codespaces
 1. Open http://localhost:8081/products. Enter keywords. Hit "Ask OpenAI" Button.
 

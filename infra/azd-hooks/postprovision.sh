@@ -35,7 +35,7 @@ if [ "$AI_ONLY" = "false" ]; then
     
     echo "Retrieving the external IP address of the store-admin service"
     STORE_ADMIN_IP=$(kubectl get svc store-admin -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    echo "Store-admin service IP: https://$STORE_ADMIN_IP"
+    echo "Store-admin service IP: http://$STORE_ADMIN_IP/products"
 fi
 
 azd env get-values > .env
