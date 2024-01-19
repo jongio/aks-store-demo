@@ -1,4 +1,5 @@
 resource "azurecaf_name" "aks_name" {
+  count       = var.ai_only ? 0 : 1
   name          = local.resource_token
   resource_type = "azurerm_kubernetes_cluster"
   random_length = 0
@@ -7,10 +8,10 @@ resource "azurecaf_name" "aks_name" {
 
 resource "azurerm_kubernetes_cluster" "aks" {
   count               = var.ai_only ? 0 : 1
-  name                = azurecaf_name.aks_name.result
+  name                = azurecaf_name.aks_name[0].result
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = azurecaf_name.aks_name.result
+  dns_prefix          = azurecaf_name.aks_name[0].result
   tags                = azurerm_resource_group.rg.tags
 
   default_node_pool {

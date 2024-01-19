@@ -1,5 +1,5 @@
 output "RS_STORAGE_ACCOUNT" {
-  value = azurerm_storage_account.tfstate.name
+  value = azurerm_storage_account.storage.name
 }
 
 output "RS_CONTAINER_NAME" {
@@ -7,5 +7,5 @@ output "RS_CONTAINER_NAME" {
 }
 
 output "RS_RESOURCE_GROUP" {
-  value = azurerm_resource_group.tfstate.name
+  value = azurerm_resource_group.rg.name
 }

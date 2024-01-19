@@ -14,6 +14,10 @@ output "ai_endpoint" {
   value = azurerm_cognitive_account.cog.endpoint
 }
 
+output "ai_name" {
+  value = azurerm_cognitive_account.cog.endpoint
+}
+
 output "ai_key" {
   value     = azurerm_cognitive_account.cog.primary_access_key
   sensitive = true
@@ -66,3 +70,4 @@ output "db_key" {
 output "k8s_namespace" {
   value = var.ai_only ? "" : var.k8s_namespace
 }
+

@@ -173,4 +173,11 @@ Once the deployment is complete, you can verify all the services are running and
 
 ### Setup GitHub Action
 
+1. Open the Codespace in local VS Code
 1. Run `azd auth login --use-device-code=false` to login.
+      - Login. It will fail. Copy the "localhost" URL from the failed redirect.
+      - In Codespaces, open a new terminal. 
+      - Run `curl {the url you copied earlier}`
+      - Close that terminal.
+      - Go back to other terminal where you ran `az login`
+      - It should show you your subscriptions.

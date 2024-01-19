@@ -1,4 +1,5 @@
 resource "azurecaf_name" "sb_name" {
+  count         = var.ai_only ? 0 : 1
   name          = local.resource_token
   resource_type = "azurerm_servicebus_namespace"
   random_length = 0
@@ -7,7 +8,7 @@ resource "azurecaf_name" "sb_name" {
 
 resource "azurerm_servicebus_namespace" "sb" {
   count               = var.ai_only ? 0 : 1
-  name                = azurecaf_name.sb_name.result
+  name                = azurecaf_name.sb_name[0].result
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "Standard"
