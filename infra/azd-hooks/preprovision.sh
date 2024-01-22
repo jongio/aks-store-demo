@@ -45,5 +45,5 @@ fi
 
 # Select the workspace
 # Define the directory path in a variable
-TF_WORKSPACE_DIR=".azure/${AZURE_ENV_NAME}/infra/.terraform"
+TF_WORKSPACE_DIR="${GITHUB_WORKSPACE:+$GITHUB_WORKSPACE/}.azure/${AZURE_ENV_NAME}/infra/.terraform"
 terraform -chdir="$TF_WORKSPACE_DIR" workspace select -or-create "$WORKSPACE"
