@@ -1,5 +1,5 @@
 resource "azurecaf_name" "db_acc_name" {
-  count        = var.ai_only ? 0 : 1
+  count         = local.is_default_workspace ? 0 : 1
   name          = local.resource_token
   resource_type = "azurerm_cosmosdb_account"
   random_length = 0
@@ -7,7 +7,7 @@ resource "azurecaf_name" "db_acc_name" {
 }
 
 resource "azurerm_cosmosdb_account" "cosmos" {
-  count               = var.ai_only ? 0 : 1
+  count               = local.is_default_workspace ? 0 : 1
   name                = azurecaf_name.db_acc_name[0].result
   tags                = azurerm_resource_group.rg.tags
   location            = azurerm_resource_group.rg.location
@@ -51,7 +51,7 @@ resource "azurerm_cosmosdb_account" "cosmos" {
 }
 
 resource "azurerm_cosmosdb_mongo_database" "db" {
-  count               = try(var.ai_only ? 0 : 1, 0)
+  count               = try(local.is_default_workspace ? 0 : 1, 0)
   name                = "orderdb"
   resource_group_name = azurerm_cosmosdb_account.cosmos[0].resource_group_name
   account_name        = azurerm_cosmosdb_account.cosmos[0].name
@@ -59,7 +59,7 @@ resource "azurerm_cosmosdb_mongo_database" "db" {
 }
 
 resource "azurerm_cosmosdb_mongo_collection" "collection" {
-  count               = try(var.ai_only ? 0 : 1, 0)
+  count               = try(local.is_default_workspace ? 0 : 1, 0)
   name                = "orders"
   resource_group_name = azurerm_cosmosdb_account.cosmos[0].resource_group_name
   account_name        = azurerm_cosmosdb_account.cosmos[0].name

@@ -1,5 +1,5 @@
 resource "azurecaf_name" "sb_name" {
-  count         = var.ai_only ? 0 : 1
+  count         = local.is_default_workspace ? 0 : 1
   name          = local.resource_token
   resource_type = "azurerm_servicebus_namespace"
   random_length = 0
@@ -7,7 +7,7 @@ resource "azurecaf_name" "sb_name" {
 }
 
 resource "azurerm_servicebus_namespace" "sb" {
-  count               = var.ai_only ? 0 : 1
+  count               = local.is_default_workspace ? 0 : 1
   name                = azurecaf_name.sb_name[0].result
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -17,7 +17,7 @@ resource "azurerm_servicebus_namespace" "sb" {
 }
 
 resource "azurerm_servicebus_namespace_authorization_rule" "sb_rule" {
-  count        = try(var.ai_only ? 0 : 1, 0)
+  count        = try(local.is_default_workspace ? 0 : 1, 0)
   name         = "listener"
   namespace_id = azurerm_servicebus_namespace.sb[0].id
 
@@ -27,13 +27,13 @@ resource "azurerm_servicebus_namespace_authorization_rule" "sb_rule" {
 }
 
 resource "azurerm_servicebus_queue" "sb_queue" {
-  count        = try(var.ai_only ? 0 : 1, 0)
+  count        = try(local.is_default_workspace ? 0 : 1, 0)
   name         = "orders"
   namespace_id = azurerm_servicebus_namespace.sb[0].id
 }
 
 resource "azurerm_servicebus_queue_authorization_rule" "sb_queue_rule" {
-  count    = try(var.ai_only ? 0 : 1, 0)
+  count    = try(local.is_default_workspace ? 0 : 1, 0)
   name     = "sender"
   queue_id = azurerm_servicebus_queue.sb_queue[0].id
 

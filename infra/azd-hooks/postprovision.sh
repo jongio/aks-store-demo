@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Convert AI_ONLY to lowercase and trim any whitespace
-AI_ONLY=$(echo "${AI_ONLY}" | tr '[:upper:]' '[:lower:]' | xargs)
+# Convert WORKSPACE to lowercase and trim any whitespace
+WORKSPACE=$(echo "${WORKSPACE}" | tr '[:upper:]' '[:lower:]' | xargs)
 
-# Check if AI_ONLY is set to "true"
-if [ "$AI_ONLY" = "false" ]; then
+# Check if WORKSPACE is set to "azure"
+if [ "$WORKSPACE" = "azure" ]; then
     echo "Retrieving cluster credentials"
     az aks get-credentials --resource-group ${rg_name} --name ${aks_name}
     
@@ -39,4 +39,3 @@ if [ "$AI_ONLY" = "false" ]; then
 fi
 
 azd env get-values > .env
-

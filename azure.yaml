@@ -7,7 +7,7 @@ hooks:
   preprovision:
     shell: sh
     continueOnError: false
-    interactive: false
+    interactive: true
     run: infra/azd-hooks/preprovision.sh
   postprovision:
     shell: sh
