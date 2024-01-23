@@ -84,15 +84,13 @@ echo "    Model Capacity: 120                "
 echo "    Azure Portal Link:                                 "
 echo "    https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${rg_name}/providers/Microsoft.CognitiveServices/accounts/${ai_name}/overview"
 echo "    Azure OpenAI Studio: ${COGNITIVE_SERVICE_URL}    "
-echo "======================================================"
-
-
+echo ""
 echo "======================================================"
 echo " AI Test                 "
 echo "======================================================"
 echo " You can run the following to test the AI Service: "
 echo "      ./tests/test-ai.sh"
-
+echo ""
 echo "======================================================"
 echo " AI Key                 "
 echo "======================================================"
