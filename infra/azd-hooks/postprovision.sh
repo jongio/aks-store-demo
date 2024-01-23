@@ -71,3 +71,32 @@ echo "                     AI Test                 "
 echo "======================================================"
 echo " You can run the following to test the AI Service: "
 echo "      ./tests/test-ai.sh"
+
+echo "======================================================"
+echo "                     AI Key                 "
+echo "======================================================"
+echo " The Azure OpenAI Key is stored in the .env file in the root of this repo.  
+echo " You can also find the key by running this following command: 
+echo "    azd env get-values | grep ai_key
+
+# Check if AZD_PIPELINE_CONFIG_PROMPT is not set or is true
+if [ -z "${AZD_PIPELINE_CONFIG_PROMPT}" ] || [ "${AZD_PIPELINE_CONFIG_PROMPT}" = "true" ]; then
+    
+    echo "======================================================"
+    echo "                     Github Action Setup                 "
+    echo "======================================================"
+    
+    # Ask the user a question and get their response
+    read -p "Do you want to configure a GitHub action to automatically deploy this repo to Azure when you push code changes? (N/y) " response
+
+    # Default response is "N"
+    response=${response:-N}
+
+    # Check the response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        echo "Configuring GH Action..."
+        azd pipeline config
+        # Set AZD_GH_ACTION_PROMPT to false
+        azd env set AZD_PIPELINE_CONFIG_PROMPT false
+    fi
+fi
