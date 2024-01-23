@@ -39,3 +39,35 @@ if [ "$WORKSPACE" = "azure" ]; then
 fi
 
 azd env get-values > .env
+
+
+# Retrieve the internalId of the Cognitive Services account
+INTERNAL_ID=$(az cognitiveservices account show \
+    --name ${ai_name} \
+    -g ${rg_name} \
+--query "properties.internalId" -o tsv)
+
+# Construct the URL
+COGNITIVE_SERVICE_URL="https://oai.azure.com/portal/${INTERNAL_ID}?tenantid=${azure_tenant_id}"
+
+
+# Display OpenAI Endpoint and other details
+echo "======================================================"
+echo "                     AI Configuration                 "
+echo "======================================================"
+echo "    OpenAI Endpoint: ${ai_endpoint}                    "
+echo "    SKU Name: S0                             "
+echo "    AI Model Name: ${ai_model_name}                    "
+echo "    Model Version: 0613                    "
+echo "    Model Capacity: 120                "
+echo "    Azure Portal Link:                                 "
+echo "    https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${rg_name}/providers/Microsoft.CognitiveServices/accounts/${ai_name}/overview"
+echo "    Azure OpenAI Studio: ${COGNITIVE_SERVICE_URL}    "
+echo "======================================================"
+
+
+echo "======================================================"
+echo "                     AI Test                 "
+echo "======================================================"
+echo " You can run the following to test the AI Service: "
+echo "      ./tests/test-ai.sh"

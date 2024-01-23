@@ -15,7 +15,7 @@ output "ai_endpoint" {
 }
 
 output "ai_name" {
-  value = azurerm_cognitive_account.cog.endpoint
+  value = azurerm_cognitive_account.cog.name
 }
 
 output "ai_key" {
@@ -69,4 +69,8 @@ output "db_key" {
 
 output "k8s_namespace" {
   value = local.is_default_workspace ? "" : var.k8s_namespace
+}
+
+output "azure_tenant_id" {
+  value = data.azurerm_client_config.current.tenant_id
 }
