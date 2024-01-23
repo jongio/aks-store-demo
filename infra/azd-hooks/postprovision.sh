@@ -75,9 +75,11 @@ echo "      ./tests/test-ai.sh"
 echo "======================================================"
 echo "                     AI Key                 "
 echo "======================================================"
-echo " The Azure OpenAI Key is stored in the .env file in the root of this repo.  
-echo " You can also find the key by running this following command: 
-echo "    azd env get-values | grep ai_key
+echo " The Azure OpenAI Key is stored in the .env file in the root of this repo.  "
+echo ""
+echo " You can also find the key by running this following command: "
+echo ""
+echo "    azd env get-values"
 
 # Check if AZD_PIPELINE_CONFIG_PROMPT is not set or is true
 if [ -z "${AZD_PIPELINE_CONFIG_PROMPT}" ] || [ "${AZD_PIPELINE_CONFIG_PROMPT}" = "true" ]; then
@@ -94,7 +96,7 @@ if [ -z "${AZD_PIPELINE_CONFIG_PROMPT}" ] || [ "${AZD_PIPELINE_CONFIG_PROMPT}" =
 
     # Check the response
     if [[ "$response" =~ ^[Yy]$ ]]; then
-        echo "Configuring GH Action..."
+        echo "Configuring GitHub Action..."
         azd pipeline config
         # Set AZD_GH_ACTION_PROMPT to false
         azd env set AZD_PIPELINE_CONFIG_PROMPT false
