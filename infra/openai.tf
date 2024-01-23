@@ -38,7 +38,7 @@ resource "azurerm_user_assigned_identity" "uai" {
 }
 
 resource "azurerm_federated_identity_credential" "fic" {
-  count               = var.ai_only ? 0 : 1
+  count               = local.is_default_workspace ? 0 : 1
   name                = azurecaf_name.cog_name.result
   resource_group_name = azurerm_resource_group.rg.name
   parent_id           = azurerm_user_assigned_identity.uai.id

@@ -18,10 +18,10 @@ variable "ai_location" {
   type        = string
 }
 
-variable "ai_only" {
-  description = "value of azure ai only"
-  type        = bool
-  default     = true
+variable "workspace" {
+  description = "value of workspace"
+  type        = string
+  default     = "dev"
 }
 
 variable "openai_model_name" {

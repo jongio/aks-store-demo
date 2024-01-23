@@ -3,7 +3,7 @@ output "rg_name" {
 }
 
 output "aks_name" {
-  value = var.ai_only ? "" : azurerm_kubernetes_cluster.aks[0].name
+  value = local.is_default_workspace ? "" : azurerm_kubernetes_cluster.aks[0].name
 }
 
 output "ai_model_name" {
@@ -15,7 +15,7 @@ output "ai_endpoint" {
 }
 
 output "ai_name" {
-  value = azurerm_cognitive_account.cog.endpoint
+  value = azurerm_cognitive_account.cog.name
 }
 
 output "ai_key" {
@@ -28,46 +28,49 @@ output "ai_managed_identity_client_id" {
 }
 
 output "sb_namespace_host" {
-  value = var.ai_only ? "" : "${azurerm_servicebus_namespace.sb[0].name}.servicebus.windows.net"
+  value = local.is_default_workspace ? "" : "${azurerm_servicebus_namespace.sb[0].name}.servicebus.windows.net"
 }
 
 output "sb_namespace_uri" {
-  value     = var.ai_only ? "" : "amqps://${azurerm_servicebus_namespace.sb[0].name}.servicebus.windows.net"
+  value     = local.is_default_workspace ? "" : "amqps://${azurerm_servicebus_namespace.sb[0].name}.servicebus.windows.net"
   sensitive = true
 }
 
 output "sb_listener_username" {
-  value = var.ai_only ? "" : azurerm_servicebus_namespace_authorization_rule.sb_rule[0].name
+  value = local.is_default_workspace ? "" : azurerm_servicebus_namespace_authorization_rule.sb_rule[0].name
 }
 
 output "sb_listener_key" {
-  value     = var.ai_only ? "" : azurerm_servicebus_namespace_authorization_rule.sb_rule[0].primary_key
+  value     = local.is_default_workspace ? "" : azurerm_servicebus_namespace_authorization_rule.sb_rule[0].primary_key
   sensitive = true
 }
 
 output "sb_sender_username" {
-  value = var.ai_only ? "" : azurerm_servicebus_queue_authorization_rule.sb_queue_rule[0].name
+  value = local.is_default_workspace ? "" : azurerm_servicebus_queue_authorization_rule.sb_queue_rule[0].name
 }
 
 output "sb_sender_key" {
-  value     = var.ai_only ? "" : azurerm_servicebus_queue_authorization_rule.sb_queue_rule[0].primary_key
+  value     = local.is_default_workspace ? "" : azurerm_servicebus_queue_authorization_rule.sb_queue_rule[0].primary_key
   sensitive = true
 }
 
 output "db_account_name" {
-  value = var.ai_only ? "" : azurerm_cosmosdb_account.cosmos[0].name
+  value = local.is_default_workspace ? "" : azurerm_cosmosdb_account.cosmos[0].name
 }
 
 output "db_uri" {
-  value = var.ai_only ? "" : "mongodb://${azurerm_cosmosdb_account.cosmos[0].name}.mongo.cosmos.azure.com:10255/?retryWrites=false"
+  value = local.is_default_workspace ? "" : "mongodb://${azurerm_cosmosdb_account.cosmos[0].name}.mongo.cosmos.azure.com:10255/?retryWrites=false"
 }
 
 output "db_key" {
-  value     = var.ai_only ? "" : azurerm_cosmosdb_account.cosmos[0].primary_key
+  value     = local.is_default_workspace ? "" : azurerm_cosmosdb_account.cosmos[0].primary_key
   sensitive = true
 }
 
 output "k8s_namespace" {
-  value = var.ai_only ? "" : var.k8s_namespace
+  value = local.is_default_workspace ? "" : var.k8s_namespace
 }
 
+output "azure_tenant_id" {
+  value = data.azurerm_client_config.current.tenant_id
+}

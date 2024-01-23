@@ -150,24 +150,24 @@ Once the deployment is complete, you can verify all the services are running and
 1. Open in Codespaces. Make sure you are on `jong2` branch.
 1. Run `azd auth login`
 1. AZ Login
-    1. AZ login from within Codespaces on Web (due to this issue: https://github.com/Azure/azure-cli/issues/20315)
-        - Run `az login --scope https://graph.microsoft.com/.default`
-        - Login. It will fail. Copy the "localhost" URL from the failed redirect.
-        - In Codespaces, open a new terminal. 
-        - Run `curl {the url you copied earlier}`
-        - Close that terminal.
-        - Go back to other terminal where you ran `az login`
-        - It should show you your subscriptions.
-    1. AZ login from within Codespaces in VS Code
-        - Run `az login --scope https://graph.microsoft.com/.default --use-device-code`
+   1. AZ login from within Codespaces on Web (due to this issue: https://github.com/Azure/azure-cli/issues/20315)
+      - Run `az login --scope https://graph.microsoft.com/.default`
+      - Login. It will fail. Copy the "localhost" URL from the failed redirect.
+      - In Codespaces, open a new terminal.
+      - Run `curl {the url you copied earlier}`
+      - Close that terminal.
+      - Go back to other terminal where you ran `az login`
+      - It should show you your subscriptions.
+   1. AZ login from within Codespaces in VS Code
+      - Run `az login --scope https://graph.microsoft.com/.default --use-device-code`
 1. Run `az account set -n {sub}` to set right subscription.
-1. Run `azd up` to provision only the Azure AI service. Choose "east us 2" region. 
+1. Run `azd up` to provision only the Azure AI service. Choose "east us 2" region.
 1. Run `docker compose up` to run in Codespaces
 1. Open http://localhost:8081/products. Enter keywords. Hit "Ask OpenAI" Button.
 
 ### Provision all resources to Azure
 
-1. Run `azd env set AI_ONLY false`
+1. Run `azd env set WORKSPACE azure`
 1. Run `azd up`. This will provision all Azure resources (AKS, Service Bus, etc)
 1. Open store-admin IP, which will be outputted to the terminal. Enter keywords. Hit "Ask OpenAI" Button.
 
@@ -175,9 +175,11 @@ Once the deployment is complete, you can verify all the services are running and
 
 1. Open the Codespace in local VS Code
 1. Run `azd auth login --use-device-code=false` to login.
-      - Login. It will fail. Copy the "localhost" URL from the failed redirect.
-      - In Codespaces, open a new terminal. 
-      - Run `curl {the url you copied earlier}`
-      - Close that terminal.
-      - Go back to other terminal where you ran `az login`
-      - It should show you your subscriptions.
+   - Login. It will fail. Copy the "localhost" URL from the failed redirect.
+   - In Codespaces, open a new terminal.
+   - Run `curl {the url you copied earlier}`
+   - Close that terminal.
+   - Go back to other terminal where you ran `az login`
+   - It should show you your subscriptions.
+1. Run `azd pipeline config`
+1. Once setup, view the action on GitHub to view the results.
