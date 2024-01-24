@@ -33,34 +33,34 @@ if [ "$WORKSPACE" = "azure" ]; then
     echo "Waiting for the service to be available..."
     sleep 30
     
+    # Check if AZD_PIPELINE_CONFIG_PROMPT is not set or is true
+    if [ -z "${AZD_PIPELINE_CONFIG_PROMPT}" ] || [ "${AZD_PIPELINE_CONFIG_PROMPT}" = "true" ]; then
+        
+        echo "======================================================"
+        echo "                     Github Action Setup                 "
+        echo "======================================================"
+        
+        # Ask the user a question and get their response
+        read -p "Do you want to configure a GitHub action to automatically deploy this repo to Azure when you push code changes? (Y/n) " response
+
+        # Default response is "N"
+        response=${response:-Y}
+
+        # Check the response
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            echo "Configuring GitHub Action..."
+            azd pipeline config
+            # Set AZD_GH_ACTION_PROMPT to false
+            azd env set AZD_PIPELINE_CONFIG_PROMPT false
+        fi
+    fi
+
     echo "Retrieving the external IP address of the store-admin service"
     STORE_ADMIN_IP=$(kubectl get svc store-admin -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
     echo "Store-admin service IP: http://$STORE_ADMIN_IP"
 fi
 
 azd env get-values > .env
-
-# Check if AZD_PIPELINE_CONFIG_PROMPT is not set or is true
-if [ -z "${AZD_PIPELINE_CONFIG_PROMPT}" ] || [ "${AZD_PIPELINE_CONFIG_PROMPT}" = "true" ]; then
-    
-    echo "======================================================"
-    echo "                     Github Action Setup                 "
-    echo "======================================================"
-    
-    # Ask the user a question and get their response
-    read -p "Do you want to configure a GitHub action to automatically deploy this repo to Azure when you push code changes? (Y/n) " response
-
-    # Default response is "N"
-    response=${response:-Y}
-
-    # Check the response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-        echo "Configuring GitHub Action..."
-        azd pipeline config
-        # Set AZD_GH_ACTION_PROMPT to false
-        azd env set AZD_PIPELINE_CONFIG_PROMPT false
-    fi
-fi
 
 # Retrieve the internalId of the Cognitive Services account
 INTERNAL_ID=$(az cognitiveservices account show \
@@ -70,7 +70,6 @@ INTERNAL_ID=$(az cognitiveservices account show \
 
 # Construct the URL
 COGNITIVE_SERVICE_URL="https://oai.azure.com/portal/${INTERNAL_ID}?tenantid=${azure_tenant_id}"
-
 
 # Display OpenAI Endpoint and other details
 echo "======================================================"
