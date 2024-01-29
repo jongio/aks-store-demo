@@ -3,7 +3,7 @@ name: package-store-admin
 on:
   push:
     branches:
-      - 'main'
+      - 'jong2'
     paths:
       - 'src/store-admin/**'
 

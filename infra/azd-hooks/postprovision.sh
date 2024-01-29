@@ -56,6 +56,9 @@ if [ "$WORKSPACE" = "azure" ]; then
     fi
 
     echo "Retrieving the external IP address of the store-admin service"
+    echo "======================================================"
+    echo " Website IP Address                 "
+    echo "======================================================"
     STORE_ADMIN_IP=$(kubectl get svc store-admin -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
     echo "Store-admin service IP: http://$STORE_ADMIN_IP"
 fi
