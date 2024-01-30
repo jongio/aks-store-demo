@@ -1,6 +1,6 @@
 <template>
   <div class="action-button">
-    <button @click="saveProduct" class="button">Save Product</button>
+    <button @click="saveProduct" class="button">Save</button>
   </div>
   <br/>
   <div v-if="showValidationErrors" class="error">
