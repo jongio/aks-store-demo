@@ -16,7 +16,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: store-admin
-        image: ghcr.io/jongio/aks-store-demo/store-admin:latest
+        image: ghcr.io/jongio/aks-store-demo/store-admin:5a89fa4
         ports:
         - containerPort: 8081
           name: store-admin
